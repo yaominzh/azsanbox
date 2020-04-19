@@ -1,5 +1,6 @@
 package com.azwe.xunke.controller;
 
+import com.azwe.xunke.common.BusinessException;
 import com.azwe.xunke.common.CommonError;
 import com.azwe.xunke.common.CommonRes;
 import com.azwe.xunke.common.EmBusinessError;
@@ -30,10 +31,11 @@ public class UserController {
 
     @RequestMapping("/get")
     @ResponseBody
-    public CommonRes getUser(@RequestParam(name = "id") Integer id) {
+    public CommonRes getUser(@RequestParam(name = "id") Integer id) throws BusinessException {
         UserModel userModel = userService.getUser(id);
         if (userModel == null) {
-            return CommonRes.create(new CommonError(EmBusinessError.NO_OBJECT_FOUND), "fail");
+//            return CommonRes.create(new CommonError(EmBusinessError.NO_OBJECT_FOUND), "fail");
+            throw new BusinessException(EmBusinessError.NO_OBJECT_FOUND);
         }
         return CommonRes.create(userModel);
     }
