@@ -1,5 +1,8 @@
 package com.azwe.xunke.controller;
 
+import com.azwe.xunke.common.CommonError;
+import com.azwe.xunke.common.CommonRes;
+import com.azwe.xunke.common.EmBusinessError;
 import com.azwe.xunke.model.UserModel;
 import com.azwe.xunke.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,11 @@ public class UserController {
 
     @RequestMapping("/get")
     @ResponseBody
-    public UserModel getUser(@RequestParam(name = "id") Integer id) {
-        return userService.getUser(id);
+    public CommonRes getUser(@RequestParam(name = "id") Integer id) {
+        UserModel userModel = userService.getUser(id);
+        if (userModel == null) {
+            return CommonRes.create(new CommonError(EmBusinessError.NO_OBJECT_FOUND), "fail");
+        }
+        return CommonRes.create(userModel);
     }
 }
