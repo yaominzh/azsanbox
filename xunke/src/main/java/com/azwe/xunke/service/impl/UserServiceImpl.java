@@ -1,10 +1,19 @@
 package com.azwe.xunke.service.impl;
 
+import com.azwe.xunke.common.BusinessException;
+import com.azwe.xunke.common.EmBusinessError;
 import com.azwe.xunke.dal.UserModelMapper;
 import com.azwe.xunke.model.UserModel;
 import com.azwe.xunke.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Encoder;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 /**
  * Created by AZ
@@ -18,5 +27,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel getUser(Integer id) {
         return userModelMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public UserModel register(UserModel registerUser) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        registerUser.setPassword(encodeByMd5(registerUser.getPassword()));
+        registerUser.setCreatedAt(new Date());
+        registerUser.setUpdatedAt(new Date());
+        try {
+            userModelMapper.insertSelective(registerUser);
+        } catch (DuplicateKeyException ex) {
+            throw new BusinessException(EmBusinessError.REGISTER_DUP_FAIL);
+        }
+        return getUser(registerUser.getId());
+    }
+    private String encodeByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        BASE64Encoder base64Encoder= new BASE64Encoder();
+        return base64Encoder.encode(messageDigest.digest(str.getBytes("utf-8")));
     }
 }
