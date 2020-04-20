@@ -41,9 +41,19 @@ public class UserServiceImpl implements UserService {
         }
         return getUser(registerUser.getId());
     }
+
+    @Override
+    public UserModel login(String telphone, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, BusinessException {
+        UserModel userModel = userModelMapper.selectByTelphoneAndPassword(telphone, encodeByMd5(password));
+        if (userModel == null) {
+            throw new BusinessException(EmBusinessError.LOGIN_FAIL);
+        }
+        return userModel;
+    }
+
     private String encodeByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        BASE64Encoder base64Encoder= new BASE64Encoder();
+        BASE64Encoder base64Encoder = new BASE64Encoder();
         return base64Encoder.encode(messageDigest.digest(str.getBytes("utf-8")));
     }
 }

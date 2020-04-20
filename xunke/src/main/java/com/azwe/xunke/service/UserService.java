@@ -13,5 +13,6 @@ import java.security.NoSuchAlgorithmException;
 public interface UserService {
     UserModel getUser(Integer id);
     UserModel register(UserModel userModel) throws BusinessException, UnsupportedEncodingException, NoSuchAlgorithmException;
+    UserModel login(String telphone, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, BusinessException;
 
 }
