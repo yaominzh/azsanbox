@@ -1,5 +1,6 @@
 package com.azwe.xunke.controller.admin;
 
+import com.azwe.xunke.common.AdminPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -44,11 +45,16 @@ public class AdminController {
     public static final String CURRENT_ADMIN_SESSION="currentAdminSession";
 
     @RequestMapping("/index")
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView(("/admin/admin/index"));
-        return modelAndView;
+    @AdminPermission
+    public ModelAndView index(){
+        ModelAndView modelAndView = new ModelAndView("/admin/admin/index");
 
+        modelAndView.addObject("userCount",userService.countAllUser());
+        modelAndView.addObject("CONTROLLER_NAME","admin");
+        modelAndView.addObject("ACTION_NAME","index");
+        return modelAndView;
     }
+
     @RequestMapping("/loginpage")
     public ModelAndView loginpage() {
         ModelAndView modelAndView = new ModelAndView(("/admin/admin/login"));
