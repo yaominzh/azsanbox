@@ -1,6 +1,7 @@
 package com.azwe.xunke.service.impl;
 
 import com.azwe.xunke.common.BusinessException;
+import com.azwe.xunke.common.EmBusinessError;
 import com.azwe.xunke.dal.SellerModelMapper;
 import com.azwe.xunke.model.SellerModel;
 import com.azwe.xunke.service.SellerService;
@@ -35,7 +36,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public SellerModel get(Integer id) {
-        return null;
+        return sellerModelMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -45,6 +46,17 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public SellerModel changeStatus(Integer id, Integer disabledFlag) throws BusinessException {
-        return null;
+        SellerModel sellerModel = get(id);
+        if(sellerModel == null){
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        sellerModel.setDisabledFlag(disabledFlag);
+        sellerModelMapper.updateByPrimaryKeySelective(sellerModel);
+        return sellerModel;
+    }
+
+    @Override
+    public Integer countAllSeller() {
+        return sellerModelMapper.countAllSeller();
     }
 }

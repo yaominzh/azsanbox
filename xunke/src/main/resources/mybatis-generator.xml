@@ -50,7 +50,7 @@
                <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true" />-->
-        <!--</table>-->
+        <!--</table>->
 
 
     </context>

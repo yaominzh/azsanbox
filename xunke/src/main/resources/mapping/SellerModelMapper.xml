@@ -33,6 +33,20 @@
     from seller
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from seller
+    order by id ASC
+  </select>
+
+  <select id="countAllSeller"  resultType="java.lang.Integer">
+    select
+    count(1)
+    from seller
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated
@@ -142,10 +156,4 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from seller
-    order by id ASC
-  </select>
 </mapper>

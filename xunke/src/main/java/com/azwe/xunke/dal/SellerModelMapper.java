@@ -55,4 +55,6 @@ public interface SellerModelMapper {
      * @mbg.generated Tue Apr 21 22:27:53 CST 2020
      */
     int updateByPrimaryKey(SellerModel record);
+
+    Integer countAllSeller();
 }
