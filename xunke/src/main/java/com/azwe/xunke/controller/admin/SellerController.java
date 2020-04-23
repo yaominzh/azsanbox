@@ -1,4 +1,4 @@
-package com.azwe.xunke.controller;
+package com.azwe.xunke.controller.admin;
 import com.azwe.xunke.common.*;
 import com.azwe.xunke.model.SellerModel;
 import com.azwe.xunke.request.PageQuery;
