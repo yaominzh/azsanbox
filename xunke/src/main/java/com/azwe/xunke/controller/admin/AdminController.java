@@ -1,6 +1,8 @@
 package com.azwe.xunke.controller.admin;
 
 import com.azwe.xunke.common.AdminPermission;
+import com.azwe.xunke.service.SellerService;
+import com.azwe.xunke.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import com.azwe.xunke.common.BusinessException;
 import com.azwe.xunke.common.EmBusinessError;
 import com.azwe.xunke.service.UserService;
+import com.azwe.xunke.service.CategoryService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,7 +45,17 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    public static final String CURRENT_ADMIN_SESSION="currentAdminSession";
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ShopService shopService;
+
+    @Autowired
+    private SellerService sellerService;
+
+
+    public static final String CURRENT_ADMIN_SESSION = "currentAdminSession";
 
     @RequestMapping("/index")
     @AdminPermission
@@ -50,6 +63,9 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("/admin/admin/index");
 
         modelAndView.addObject("userCount",userService.countAllUser());
+        modelAndView.addObject("shopCount",shopService.countAllShop());
+        modelAndView.addObject("categoryCount",categoryService.countAllCategory());
+        modelAndView.addObject("sellerCount",sellerService.countAllSeller());
         modelAndView.addObject("CONTROLLER_NAME","admin");
         modelAndView.addObject("ACTION_NAME","index");
         return modelAndView;
