@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        powermockVersion = '2.0.0-beta.5'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.easymock', name: 'easymock', version: '3.4'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.21.0'
+    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: powermockVersion
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: powermockVersion
+    testCompile group: 'org.powermock', name: 'powermock-api-easymock', version: powermockVersion
+}
+
+shadowJar {
+    baseName = 'iscream'
+    manifest {
+        attributes 'Main-Class': 'com.letstalkdata.iscream.Application'
+    }
+}

@@ -1,0 +1,41 @@
+buildscript {
+    ext {
+        jsfVersion = '2.2.18'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+group 'iscream-web'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply from: 'https://raw.github.com/gretty-gradle-plugin/gretty/master/pluginScripts/gretty-2.2.0.plugin'
+
+sourceCompatibility = 10
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile group: 'com.sun.faces', name: 'jsf-api', version:"$jsfVersion"
+    compile group: 'com.sun.faces', name: 'jsf-impl', version:"$jsfVersion"
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+}
+
+war {
+    archiveName = "${rootProject.name}.war"
+}
+
+gretty {
+    contextPath = '/'
+    // Jetty 9.4 is supposed to be Java 11 compatible, but I am getting
+    // an 'Unsupported class file major version 55' error
+    // It is working with sourceCompatibility = 10
+    servletContainer = 'jetty9.4'
+}
