@@ -28,3 +28,6 @@ hs_err_pid*
 */target
 */.idea
 ctemp
+
+crud-express-mongodb/node_modules
+crud-express-mongodb/package-lock.json
