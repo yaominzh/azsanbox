@@ -6,7 +6,9 @@
 
 
 # wechat robot 
-
+## M45t3r
+https://github.com/MustangYM/WeChatExtension-ForMac  这个还在更新，参考价值大一些
+不是他这个，我是基于https://github.com/TKkk-iOSer/WeChatPlugin-MacOS 这个，自己改的一套
 ## wechat-group-ibot
 https://github.com/mobabel/wechat-group-ibot
 ## wxpy
