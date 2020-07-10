@@ -1,11 +1,20 @@
-class Solution():
-    def isPalindrome(self, x: int) -> bool:
-        l = list(str(x))
-        if l[0] == '-':
-            return False
-        if l == list.reverse(l):
-            return True
-        return False
+class TreeNode():
+    def __init__(self, val):
+        self.val= val 
+        self.left = None
+        self.right  = None
+    
+def preOrderTraverse(node):
+    if not node:
+        return None
+    print(str(node.val))
+    preOrderTraverse(node.left)
+    preOrderTraverse(node.right)
+    
 
-if __name__ == "__main__":
-    print(Solution().isPalindrome(121))
+
+root=TreeNode(5)
+root.left = TreeNode(4)
+root.right= TreeNode(7)
+
+preOrderTraverse(root)
